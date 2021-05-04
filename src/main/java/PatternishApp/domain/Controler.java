@@ -1,30 +1,63 @@
 package PatternishApp.domain;
 
-import java.util.ArrayList;
-import java.util.List;
+import PatternishApp.gui.DrawingPanel;
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 
 public class Controler {
-    private List<Shape> shapeList = new ArrayList<>();
-    private RandomShapeFactory randomShapeFactory = new RandomShapeFactory();
     private Drawer drawer = new Drawer(this);
+    private BufferedImage baseImage;
+    private BufferedImage fullImage;
+    private DrawingPanel drawingPanelBase;
+    private DrawingPanel drawingPanelFull;
+    private RandomShapeFactory randomShapeFactory;
+    private BaseImageGenerator baseImageFactory;
+    private ImageGenerator fullImageFactory;
 
-    public Controler() {
+    public Controler(DrawingPanel drawingPanelBase, DrawingPanel drawingPanelFull) {
+        this.drawingPanelBase = drawingPanelBase;
+        this.drawingPanelFull = drawingPanelFull;
+        this.randomShapeFactory = new RandomShapeFactory();
+        this.baseImageFactory = new BaseImageGenerator(4,this,drawingPanelBase);
+        this.fullImageFactory = new ImageGenerator(this,drawingPanelFull);
     }
 
-    public void generateRandomShape(){
-        shapeList.add(randomShapeFactory.generateShape());
+    public BufferedImage generateBaseImage(){
+        this.baseImage = baseImageFactory.generateBaseImage();
+        return baseImage;
     }
 
-    public void generateNewShapes(int amount){
-        shapeList.clear();
-        for (int i=0; i<amount; i++){
-            generateRandomShape();
-        }
+    public BufferedImage generateFullImage(){
+        this.fullImage = fullImageFactory.generateFullImage();
+        return fullImage;
     }
 
-    public List<Shape> getShapeList(){
-        return shapeList;
+    public DrawingPanel getDrawingPanelFull() {
+        return drawingPanelFull;
     }
 
+    public DrawingPanel getDrawingPanelBase() {
+        return drawingPanelBase;
+    }
+
+    public BufferedImage getBaseImage() {
+        return baseImage;
+    }
+
+    public BufferedImage getFullImage() {
+        return fullImage;
+    }
+
+    public void setMyBaseImage(BufferedImage myBaseImage){
+        this.baseImage = myBaseImage;
+    }
+
+    public BaseImageGenerator getImageFactory() {
+        return baseImageFactory;
+    }
+
+    public RandomShapeFactory getRandomShapeFactory() {
+        return randomShapeFactory;
+    }
 
 }

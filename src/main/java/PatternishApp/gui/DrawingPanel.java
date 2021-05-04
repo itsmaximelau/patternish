@@ -1,17 +1,30 @@
 package PatternishApp.gui;
 
 import PatternishApp.domain.Drawer;
-import java.awt.Graphics;
+import PatternishApp.domain.ImageFlipping;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class DrawingPanel extends javax.swing.JPanel
 {
     private MainWindow mainWindow;
+    private ImageFlipping flipper;
+    private panelType type;
+
+    enum panelType{
+        BASE,
+        FULL
+    }
 
     public DrawingPanel(){
         initComponent();
     }
 
-    public DrawingPanel(MainWindow mainWindow){
+    public DrawingPanel(MainWindow mainWindow,panelType type){
+        this.type = type;
         this.mainWindow = mainWindow;
         setVisible(true);
         initComponent();
@@ -26,7 +39,15 @@ public class DrawingPanel extends javax.swing.JPanel
         if (this.mainWindow != null){
             super.paintComponent(g);
             Drawer mainDrawer = new Drawer(mainWindow.controler);
-            mainDrawer.draw(g);
+
+            switch(type){
+                case BASE:
+                    mainDrawer.drawBaseImage(g);
+                    break;
+                case FULL:
+                    mainDrawer.drawFullImage(g);
+                    break;
+            }
         }
 
         else {
@@ -45,5 +66,38 @@ public class DrawingPanel extends javax.swing.JPanel
 
     public MainWindow getMainWindow() {
         return mainWindow;
+    }
+
+    public void saveImage(String nom){
+        BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        paint(g2);
+        try{
+            ImageIO.write(image, "JPEG", new File(nom + ".png"));
+        }
+        catch (Exception e){
+            System.out.println("Erreur export de l'image");
+        }
+
+        BufferedImage image2 = flipper.flip(image,1);
+        BufferedImage image3 = flipper.flip(image,-1);
+        BufferedImage image4 = flipper.flip(image3,1);
+
+        try{
+            ImageIO.write(image2, "JPEG", new File(nom+"2.png"));
+            ImageIO.write(image3, "JPEG", new File(nom+"3.png"));
+            ImageIO.write(image4, "JPEG", new File(nom+"4.png"));
+        }
+        catch (Exception e){
+            System.out.println("Erreur export de l'image");
+        }
+    }
+
+    public BufferedImage getImage(){
+        BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = image.createGraphics();
+        paint(g2);
+
+        return image;
     }
 }

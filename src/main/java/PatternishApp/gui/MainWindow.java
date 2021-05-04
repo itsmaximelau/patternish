@@ -11,36 +11,42 @@ public class MainWindow extends javax.swing.JFrame{
     private JPanel mainPanel;
     private JButton generateButton;
     private JTextArea TESTPARAMTextArea;
-    private DrawingPanel drawingPanel;
+    private DrawingPanel drawingPanelFull;
+    private DrawingPanel drawingPanelBase;
 
     public MainWindow(int width, int height){
-        controler = new Controler();
-        setVisible(true);
-        setContentPane(mainPanel);
-        setSize(width,height);
-        this.setTitle("Patternish");
-
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 generate();
             }
         });
-        initComponents();
+        initComponents(width,height);
     }
 
     public void generate(){
-        controler.generateNewShapes(4);
-        drawingPanel.repaint();
+        System.out.println(controler.generateBaseImage());
+        controler.generateBaseImage();
+        drawingPanelBase.repaint();
+        drawingPanelBase.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\test");
+        controler.generateFullImage();
+        drawingPanelFull.repaint();
+        drawingPanelFull.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\test1");
+        controler.setMyBaseImage(drawingPanelBase.getImage());
     }
 
-    private void initComponents(){
+    private void initComponents(int width, int height){
+        controler = new Controler(drawingPanelBase,drawingPanelFull);
+        setVisible(true);
+        setContentPane(mainPanel);
+        setSize(width,height);
+        this.setTitle("Patternish");
     }
 
     private void createUIComponents() {
-        drawingPanel = new DrawingPanel(this);
+        drawingPanelBase = new DrawingPanel(this, DrawingPanel.panelType.BASE);
+        drawingPanelFull = new DrawingPanel(this,DrawingPanel.panelType.FULL);
     }
-
     private void $$$setupUI$$$() {
         createUIComponents();
     }
