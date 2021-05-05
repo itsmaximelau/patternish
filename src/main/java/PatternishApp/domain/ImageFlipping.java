@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class ImageFlipping {
     public static final int FLIP_VERTICAL = 1;
-    public static final int FLIP_HORIZONTAL = -1;
+    public static final int FLIP_HORIZONTAL = 0;
 
     public static BufferedImage flip(BufferedImage bi, int direction){
         try{

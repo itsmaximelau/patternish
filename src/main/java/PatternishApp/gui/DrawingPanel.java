@@ -76,20 +76,7 @@ public class DrawingPanel extends javax.swing.JPanel
             ImageIO.write(image, "JPEG", new File(nom + ".png"));
         }
         catch (Exception e){
-            System.out.println("Erreur export de l'image");
-        }
-
-        BufferedImage image2 = flipper.flip(image,1);
-        BufferedImage image3 = flipper.flip(image,-1);
-        BufferedImage image4 = flipper.flip(image3,1);
-
-        try{
-            ImageIO.write(image2, "JPEG", new File(nom+"2.png"));
-            ImageIO.write(image3, "JPEG", new File(nom+"3.png"));
-            ImageIO.write(image4, "JPEG", new File(nom+"4.png"));
-        }
-        catch (Exception e){
-            System.out.println("Erreur export de l'image");
+            System.out.println("Can't export image");
         }
     }
 

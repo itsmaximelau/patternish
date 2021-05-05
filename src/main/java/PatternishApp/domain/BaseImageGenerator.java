@@ -12,22 +12,24 @@ public class BaseImageGenerator {
     private Controler controler;
     private DrawingPanel drawingPanelBase;
 
-    public BaseImageGenerator(int amount, Controler c, DrawingPanel drawingPanelBase) {
-        this.amount = amount;
+    public BaseImageGenerator(Controler c, DrawingPanel drawingPanelBase) {
         this.controler = c;
+        this.amount = c.getShapeAmount();
         this.drawingPanelBase = drawingPanelBase;
-        System.out.println(drawingPanelBase);
     }
 
     public BufferedImage generateBaseImage() {
-        System.out.println("ICI 1");
+        setParameters();
         clearShapeList();
         for (int i = 0; i < amount; i++) {
             addShapeList(controler.getRandomShapeFactory().generateShape());
         }
         drawingPanelBase.repaint();
-        System.out.println("ICI 2");
         return drawingPanelBase.getImage();
+    }
+
+    public void setParameters(){
+        this.amount = controler.getShapeAmount();
     }
 
     public List<Shape> getShapeList(){

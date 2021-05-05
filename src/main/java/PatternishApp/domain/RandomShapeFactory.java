@@ -16,7 +16,7 @@ public class RandomShapeFactory {
             int max = 6;
             int min = 3;
             int randVertex = random.nextInt((max - min) + 1) + min;
-            List<Point> points = generateCoordinates(randVertex,250,250);
+            List<Point> points = generateCoordinates(randVertex,40,40);
 
             return new Polygon(points);
         }

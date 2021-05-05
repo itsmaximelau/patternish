@@ -1,6 +1,9 @@
 package PatternishApp.domain;
 
+import PatternishApp.Main;
 import PatternishApp.gui.DrawingPanel;
+import PatternishApp.gui.MainWindow;
+
 import java.awt.image.BufferedImage;
 import java.nio.Buffer;
 
@@ -13,13 +16,21 @@ public class Controler {
     private RandomShapeFactory randomShapeFactory;
     private BaseImageGenerator baseImageFactory;
     private ImageGenerator fullImageFactory;
+    private MainWindow mainWindow;
+    private int shapeAmount;
 
-    public Controler(DrawingPanel drawingPanelBase, DrawingPanel drawingPanelFull) {
+    public Controler(DrawingPanel drawingPanelBase, DrawingPanel drawingPanelFull, MainWindow mainWindow) {
+        this.mainWindow = mainWindow;
         this.drawingPanelBase = drawingPanelBase;
         this.drawingPanelFull = drawingPanelFull;
         this.randomShapeFactory = new RandomShapeFactory();
-        this.baseImageFactory = new BaseImageGenerator(4,this,drawingPanelBase);
+        this.baseImageFactory = new BaseImageGenerator(this,drawingPanelBase);
         this.fullImageFactory = new ImageGenerator(this,drawingPanelFull);
+    }
+
+    public int getShapeAmount() {
+        this.shapeAmount = mainWindow.getShapeAmount();
+        return shapeAmount;
     }
 
     public BufferedImage generateBaseImage(){

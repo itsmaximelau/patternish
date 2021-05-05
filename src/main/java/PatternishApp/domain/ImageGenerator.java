@@ -16,18 +16,25 @@ public class ImageGenerator {
     }
 
     public BufferedImage generateFullImage() {
-        BufferedImage fullImage = new BufferedImage(500,500, BufferedImage.TYPE_INT_RGB);
-
         BufferedImage baseImage = controler.getBaseImage();
-        BufferedImage transformedImage1 = flipper.flip(baseImage,1);
-        BufferedImage transformedImage2 = flipper.flip(baseImage,-1);
-        BufferedImage transformedImage3 = flipper.flip(transformedImage2,1);
+        int width = controler.getDrawingPanelFull().getWidth();
+        int height = controler.getDrawingPanelFull().getHeight();
+        int baseImageWidth = baseImage.getWidth();
+        int baseImageHeight = baseImage.getHeight();
+        int fullImageWidth = controler.getDrawingPanelFull().getWidth();
+        int fullImageHeight = controler.getDrawingPanelFull().getHeight();
 
+        BufferedImage fullImage = new BufferedImage(width,height, BufferedImage.TYPE_INT_RGB);
         Graphics g = fullImage.getGraphics();
-        g.drawImage(baseImage, 0,0,null);
-        g.drawImage(transformedImage1,250,0,null);
-        g.drawImage(transformedImage2,0,250,null);
-        g.drawImage(transformedImage3,250,250,null);
+
+        int amountRow = (int) Math.floor(fullImageWidth/baseImageWidth);
+        int amountCol = (int) Math.floor(fullImageHeight/baseImageHeight);
+
+        for (int i=0; i<=amountRow; i++){
+            for (int n=0; n<amountCol; n++){
+                g.drawImage(flipper.flip(baseImage,n%2),baseImageWidth*n,baseImageHeight*i,null);
+            }
+        }
 
         g.dispose();
 

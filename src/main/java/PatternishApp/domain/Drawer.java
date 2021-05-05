@@ -23,7 +23,6 @@ public class Drawer {
     }
 
     public void drawFullImage(Graphics g){
-        System.out.println("FULL IMAGE");
         g.drawImage(controler.getFullImage(),0,0,null);
     }
 }
