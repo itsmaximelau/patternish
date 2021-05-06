@@ -6,17 +6,24 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomShapeFactory {
-
     Random random = new Random();
+    private int maxVertex;
+    private int minVertex;
+    private int maxX;
+    private int maxY;
+    private Controler controler;
+
+    public RandomShapeFactory(Controler c){
+        this.controler = c;
+        setParameters();
+    }
 
     public Shape generateShape(){
         int randType = random.nextInt(1);
 
         if (randType == 0 || randType == 1){
-            int max = 6;
-            int min = 3;
-            int randVertex = random.nextInt((max - min) + 1) + min;
-            List<Point> points = generateCoordinates(randVertex,40,40);
+            int randVertex = random.nextInt((maxVertex - minVertex) + 1) + minVertex;
+            List<Point> points = generateCoordinates(randVertex,maxX,maxY);
 
             return new Polygon(points);
         }
@@ -34,5 +41,12 @@ public class RandomShapeFactory {
         }
 
         return vertexList;
+    }
+
+    public void setParameters(){
+        this.maxX = controler.getDrawingPanelBase().getWidth();
+        this.maxY = controler.getDrawingPanelBase().getHeight();
+        this.minVertex = controler.getMainWindow().getMinNumVertex();
+        this.maxVertex = controler.getMainWindow().getMaxNumVertex();
     }
 }
