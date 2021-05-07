@@ -3,7 +3,10 @@ package PatternishApp.domain;
 import PatternishApp.gui.DrawingPanel;
 import PatternishApp.gui.MainWindow;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.PrintStream;
 
 public class Controler {
     private Drawer drawer = new Drawer(this);
@@ -29,7 +32,7 @@ public class Controler {
     public void generate(){
         baseImageFactory.setParameters();
         randomShapeFactory.setParameters();
-        sizeFullImage();
+        setSizeFullImage();
         generateBaseImage();
         drawingPanelBase.repaint();
         drawingPanelBase.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\test");
@@ -40,12 +43,12 @@ public class Controler {
     }
 
     public void regenerate(){
-        sizeFullImage();
+        setSizeFullImage();
         generateFullImage();
     }
 
-    public void sizeFullImage(){
-        drawingPanelFull.setSize(mainWindow.getFullImagePanel().getWidth()-10, mainWindow.getFullImagePanel().getHeight()-22);
+    public void setSizeFullImage(){
+        drawingPanelFull.setSize(mainWindow.getFullImagePanel().getWidth()-12, mainWindow.getFullImagePanel().getHeight()-30);
     }
 
     public int getShapeAmount() {

@@ -14,6 +14,7 @@ public class DrawingPanel extends javax.swing.JPanel
     private ImageFlipping flipper;
     private panelType type;
 
+
     enum panelType{
         BASE,
         FULL

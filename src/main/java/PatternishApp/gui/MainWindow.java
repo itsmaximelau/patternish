@@ -3,6 +3,7 @@ package PatternishApp.gui;
 import PatternishApp.domain.Controler;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -14,13 +15,11 @@ public class MainWindow extends javax.swing.JFrame{
     private JButton generateButton;
     private DrawingPanel drawingPanelFull;
     private DrawingPanel drawingPanelBase;
-    private JPanel paramPanel;
     private JComboBox shapeAmount;
     private JComboBox minNumVertex;
     private JSpinner baseImageHeight;
     private JSpinner baseImageWidth;
     private JComboBox maxNumVertex;
-    private JButton regenerateButton;
     private JPanel fullImagePanel;
 
     public MainWindow(int width, int height){
@@ -35,7 +34,10 @@ public class MainWindow extends javax.swing.JFrame{
             @Override
             public void componentResized(ComponentEvent e) {
                 super.componentResized(e);
-                regenerate();
+                if (controler.getBaseImage() != null)
+                {
+                    regenerate();
+                }
             }
         });
     }
@@ -71,6 +73,10 @@ public class MainWindow extends javax.swing.JFrame{
 
     public int getBaseImageWidth() {
         return Integer.parseInt(baseImageWidth.getValue().toString());
+    }
+
+    public Dimension getBaseImageSize(){
+        return new Dimension(getBaseImageWidth(),getBaseImageHeight());
     }
 
     private void initComponents(int width, int height){
