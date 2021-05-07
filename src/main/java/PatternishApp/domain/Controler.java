@@ -29,8 +29,7 @@ public class Controler {
     public void generate(){
         baseImageFactory.setParameters();
         randomShapeFactory.setParameters();
-
-        drawingPanelFull.setSize(600,600);
+        sizeFullImage();
         generateBaseImage();
         drawingPanelBase.repaint();
         drawingPanelBase.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\test");
@@ -38,6 +37,15 @@ public class Controler {
         drawingPanelFull.repaint();
         drawingPanelFull.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\test1");
         setMyBaseImage(drawingPanelBase.getImage());
+    }
+
+    public void regenerate(){
+        sizeFullImage();
+        generateFullImage();
+    }
+
+    public void sizeFullImage(){
+        drawingPanelFull.setSize(mainWindow.getFullImagePanel().getWidth()-10, mainWindow.getFullImagePanel().getHeight()-22);
     }
 
     public int getShapeAmount() {

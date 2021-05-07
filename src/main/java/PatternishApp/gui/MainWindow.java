@@ -5,6 +5,8 @@ import PatternishApp.domain.Controler;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 public class MainWindow extends javax.swing.JFrame{
     public Controler controler;
@@ -18,6 +20,8 @@ public class MainWindow extends javax.swing.JFrame{
     private JSpinner baseImageHeight;
     private JSpinner baseImageWidth;
     private JComboBox maxNumVertex;
+    private JButton regenerateButton;
+    private JPanel fullImagePanel;
 
     public MainWindow(int width, int height){
         generateButton.addActionListener(new ActionListener() {
@@ -27,10 +31,26 @@ public class MainWindow extends javax.swing.JFrame{
             }
         });
         initComponents(width,height);
+        mainPanel.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                super.componentResized(e);
+                regenerate();
+            }
+        });
     }
 
     public void generate(){
         controler.generate();
+    }
+
+    public void regenerate(){
+        controler.regenerate();
+        System.out.println("REGEN");
+    }
+
+    public JPanel getFullImagePanel() {
+        return fullImagePanel;
     }
 
     public int getMinNumVertex() {
