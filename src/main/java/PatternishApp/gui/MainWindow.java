@@ -22,6 +22,15 @@ public class MainWindow extends javax.swing.JFrame{
     private JSpinner baseImageWidth;
     private JComboBox maxNumVertex;
     private JPanel fullImagePanel;
+    private JButton addColorBG;
+    private JButton showColorButton;
+    private JButton addColorButton;
+    private JButton showColorButton1;
+    private JButton addColorButton1;
+    private JButton showColorButton2;
+    private JButton addColorButton2;
+    private JButton showColorButton3;
+    private JCheckBox exclusiveColorsCheckBox;
 
     public MainWindow(int width, int height){
         generateButton.addActionListener(new ActionListener() {
@@ -41,6 +50,35 @@ public class MainWindow extends javax.swing.JFrame{
                 }
             }
         });
+        addColorBG.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chooseColorBG();
+            }
+        });
+        showColorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showColorBG();
+            }
+        });
+    }
+
+    public void showColorBG(){
+        JPanel color = new JPanel();
+        color.setSize(10,10);
+        color.setBackground(controler.getBGColor());
+        JOptionPane.showConfirmDialog(null, color, "Background color", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public void chooseColorBG(){
+        Color newColor = JColorChooser.showDialog(
+                null,
+                "Choose Background Color",
+                Color.BLACK);
+        if (newColor != null){
+            controler.setBaseImageBGColor(newColor);
+        }
     }
 
     public void generate(){
@@ -95,8 +133,14 @@ public class MainWindow extends javax.swing.JFrame{
 
         JMenu image = new JMenu("Image");
         JMenuItem export = new JMenuItem("Export");
+        JMenuItem saveConfig = new JMenuItem("Save configuration");
+        JMenuItem loadConfig = new JMenuItem("Load configuration");
+        JMenuItem exit = new JMenuItem("Exit");
 
         menuBar.add(file);
+        file.add(saveConfig);
+        file.add(loadConfig);
+        file.add(exit);
 
         menuBar.add(image);
         image.add(export);
@@ -112,7 +156,6 @@ public class MainWindow extends javax.swing.JFrame{
 
         baseImageHeight.setValue(Integer.valueOf(100));
         baseImageWidth.setValue(Integer.valueOf(100));
-
     }
 
     private void createUIComponents() {

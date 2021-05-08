@@ -30,6 +30,14 @@ public class Controler {
         this.fullImageFactory = new FullImageGenerator(this,drawingPanelFull,drawingPanelExport);
     }
 
+    public void setBaseImageBGColor(Color c){
+        baseImageFactory.setBgColor(c);
+    }
+
+    public Color getBGColor(){
+        return baseImageFactory.getBGColor();
+    }
+
     public void generate(){
         baseImageFactory.setParameters();
         randomShapeFactory.setParameters();
