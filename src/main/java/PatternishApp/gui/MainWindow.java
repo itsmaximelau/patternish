@@ -3,11 +3,10 @@ package PatternishApp.gui;
 import PatternishApp.domain.Controler;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.*;
+import java.io.File;
 
 public class MainWindow extends javax.swing.JFrame{
     public Controler controler;
@@ -30,11 +29,12 @@ public class MainWindow extends javax.swing.JFrame{
     private JButton showColorButton2;
     private JButton addColorShape3;
     private JButton showColorShape3;
-    private JCheckBox exclusiveColorsCheckBox;
     private JButton generateColors;
-    private JCheckBox overrideColorsForRandomCheckBox;
+    private JSpinner exportImageWidth;
+    private JSpinner exportImageHeight;
 
     public MainWindow(int width, int height){
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,6 +49,7 @@ public class MainWindow extends javax.swing.JFrame{
                 if (controler.getBaseImage() != null)
                 {
                     resize();
+                    System.out.println(controler.getDrawingPanelFull().getSize());
                 }
             }
         });
@@ -151,7 +152,9 @@ public class MainWindow extends javax.swing.JFrame{
     }
 
     public void regenerate(){
-        controler.regenerate();
+        if (controler.getBaseImage() != null){
+            controler.regenerate();
+        }
     }
 
     public void resize(){
@@ -186,44 +189,69 @@ public class MainWindow extends javax.swing.JFrame{
         return new Dimension(getBaseImageWidth(),getBaseImageHeight());
     }
 
+    public int getExportImageWidth(){
+        return Integer.parseInt(exportImageWidth.getValue().toString());
+    }
+
+    public int getExportImageHeight(){
+        return Integer.parseInt(exportImageHeight.getValue().toString());
+    }
+
+    public Dimension getExportImageSize() {
+        return new Dimension(getExportImageWidth(),getExportImageHeight());
+    }
+
     private void initComponents(int width, int height){
+        JMenuBar menuBar = new JMenuBar();
+        this.setJMenuBar(menuBar);
+        menuBar.setVisible(true);
+
+        JMenu actions = new JMenu("Actions");
+
+        JMenuItem exportWithSettings = new JMenuItem("Export");
+        JMenuItem exit = new JMenuItem("Exit");
+
+        menuBar.add(actions);
+        actions.add(exportWithSettings);
+        actions.add(exit);
+
         controler = new Controler(drawingPanelBase,drawingPanelFull,drawingPanelExport,this);
         setVisible(true);
         setContentPane(mainPanel);
         setSize(width,height);
         this.setTitle("Patternish");
-        shapeAmount.setSelectedIndex(0);
+        shapeAmount.setSelectedIndex(2);
+        maxNumVertex.setSelectedIndex(1);
 
-        JMenuBar menuBar = new JMenuBar();
-        this.setJMenuBar(menuBar);
-
-        JMenu file = new JMenu("File");
-
-        JMenu image = new JMenu("Image");
-        JMenuItem export = new JMenuItem("Export");
-        JMenuItem saveConfig = new JMenuItem("Save configuration");
-        JMenuItem loadConfig = new JMenuItem("Load configuration");
-        JMenuItem exit = new JMenuItem("Exit");
-
-        menuBar.add(file);
-        file.add(saveConfig);
-        file.add(loadConfig);
-        file.add(exit);
-
-        menuBar.add(image);
-        image.add(export);
-
-        export.addActionListener(new ActionListener() {
+        exportWithSettings.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                controler.export();
+                JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+
+                int returnValue = jfc.showSaveDialog(null);
+
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = jfc.getSelectedFile();
+                    controler.exportWithSettings(selectedFile.getAbsolutePath());
+                }
+            }
+        });
+
+        exit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
             }
         });
 
         this.setSize(width,height);
 
-        baseImageHeight.setValue(Integer.valueOf(100));
-        baseImageWidth.setValue(Integer.valueOf(100));
+        baseImageWidth.setValue(Integer.valueOf(62));
+        baseImageHeight.setValue(Integer.valueOf(80));
+
+        exportImageWidth.setValue(Integer.valueOf(1920));
+        exportImageHeight.setValue(Integer.valueOf(1080));
+
     }
 
     private void createUIComponents() {
@@ -234,4 +262,5 @@ public class MainWindow extends javax.swing.JFrame{
     private void $$$setupUI$$$() {
         createUIComponents();
     }
+
 }

@@ -75,6 +75,7 @@ public class DrawingPanel extends javax.swing.JPanel
 
     public void saveImage(String nom){
         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
+
         Graphics2D g2 = image.createGraphics();
         paint(g2);
         try{

@@ -59,11 +59,6 @@ public class FullImageGenerator {
         int amountRow = (int) Math.ceil((float) fullImageWidth/baseImageWidth);
         int amountCol = (int) Math.ceil((float) fullImageHeight/baseImageHeight);
 
-        System.out.println(fullImageWidth);
-        System.out.println(fullImageHeight);
-        System.out.println(amountRow);
-        System.out.println(amountCol);
-
         for (int i=0; i<=amountCol; i++){
             for (int n=0; n<amountRow; n++){
                 g.drawImage(flipper.flip(baseImage,n%2),baseImageWidth*n,baseImageHeight*i,null);

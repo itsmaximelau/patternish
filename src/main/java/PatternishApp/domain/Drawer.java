@@ -1,8 +1,6 @@
 package PatternishApp.domain;
 
-
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Drawer {
     private Controler controler;

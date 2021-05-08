@@ -68,8 +68,13 @@ public class Controler {
         drawingPanelFull.repaint();
     }
 
-    public void export(){
-        drawingPanelExport.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\myImage");
+    public void exportWithSettings(String path){
+        if (fullImageFactory.getFullImage() != null) {
+            setSizeExport();
+            resize();
+            drawingPanelExport.saveImage(path);
+            //drawingPanelExport.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\myImage",0);
+        }
     }
 
     public void setSizeFullImage(){
@@ -77,7 +82,7 @@ public class Controler {
     }
 
     public void setSizeExport(){
-        drawingPanelExport.setSize(1920,1080);
+        drawingPanelExport.setSize(mainWindow.getExportImageSize());
     }
 
     public int getShapeAmount() {
