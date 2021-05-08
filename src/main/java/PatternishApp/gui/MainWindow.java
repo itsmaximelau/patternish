@@ -32,8 +32,10 @@ public class MainWindow extends javax.swing.JFrame{
     private JButton generateColors;
     private JSpinner exportImageWidth;
     private JSpinner exportImageHeight;
+    private JComboBox borderSize;
 
     public MainWindow(int width, int height){
+        this.setIconImage(new ImageIcon(getClass().getResource("/shapeIcon.png")).getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         generateButton.addActionListener(new ActionListener() {
             @Override
@@ -109,10 +111,31 @@ public class MainWindow extends javax.swing.JFrame{
         });
     }
 
+    public int getBorderSize() {
+        int size = 1;
+        switch(borderSize.getSelectedIndex()){
+            case 0:
+                size = 0;
+                break;
+            case 1:
+                size = 2;
+                break;
+            case 2:
+                size = 4;
+                break;
+            case 3:
+                size = 8;
+                break;
+        }
+        return size;
+    }
+
     public void showColorShape(int index){
-        JPanel color = new JPanel();
+        JPanel color = new ColorSquare(controler.getShapeColor(index));
         color.setSize(10,10);
-        color.setBackground(controler.getShapeColor(index));
+        JLabel label = new JLabel("This is the color.");
+        label.setForeground(Color.BLACK);
+        color.add(label);
         JOptionPane.showConfirmDialog(null, color, "Shape color", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
     }
 
@@ -131,9 +154,11 @@ public class MainWindow extends javax.swing.JFrame{
     }
 
     public void showColorBG(){
-        JPanel color = new JPanel();
+        JPanel color = new ColorSquare(controler.getBGColor());
         color.setSize(10,10);
-        color.setBackground(controler.getBGColor());
+        JLabel label = new JLabel("This is the color.");
+        label.setForeground(Color.BLACK);
+        color.add(label);
         JOptionPane.showConfirmDialog(null, color, "Background color", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
     }
 
@@ -221,7 +246,8 @@ public class MainWindow extends javax.swing.JFrame{
         setSize(width,height);
         this.setTitle("Patternish");
         shapeAmount.setSelectedIndex(2);
-        maxNumVertex.setSelectedIndex(1);
+        maxNumVertex.setSelectedIndex(2);
+        borderSize.setSelectedIndex(2);
 
         exportWithSettings.addActionListener(new ActionListener() {
             @Override
@@ -246,8 +272,13 @@ public class MainWindow extends javax.swing.JFrame{
 
         this.setSize(width,height);
 
-        baseImageWidth.setValue(Integer.valueOf(62));
+        baseImageWidth.setValue(Integer.valueOf(80));
         baseImageHeight.setValue(Integer.valueOf(80));
+
+        JSpinner.NumberEditor widthEditor = new JSpinner.NumberEditor(exportImageWidth,"#");
+        exportImageWidth.setEditor(widthEditor);
+        JSpinner.NumberEditor heightEditor = new JSpinner.NumberEditor(exportImageHeight,"#");
+        exportImageHeight.setEditor(heightEditor);
 
         exportImageWidth.setValue(Integer.valueOf(1920));
         exportImageHeight.setValue(Integer.valueOf(1080));

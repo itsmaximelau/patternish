@@ -143,4 +143,8 @@ public class Controler {
     public void addShapeColorList(int index, Color color) {
         baseImageFactory.setShapeColor(index,color);
     }
+
+    public int getBorderSize() {
+        return mainWindow.getBorderSize();
+    }
 }

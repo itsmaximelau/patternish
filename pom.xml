@@ -6,7 +6,7 @@
 
     <groupId>org.itsmaximelau</groupId>
     <artifactId>patternish</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
 
     <build>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
@@ -74,7 +74,15 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <finalName>${project.artifactId}</finalName>
     </build>
+    <dependencies>
+        <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+    </dependencies>
 
 
     <properties>
