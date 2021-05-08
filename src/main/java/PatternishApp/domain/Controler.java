@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.PrintStream;
+import java.nio.Buffer;
 
 public class Controler {
     private Drawer drawer = new Drawer(this);
@@ -38,6 +39,10 @@ public class Controler {
         return baseImageFactory.getBGColor();
     }
 
+    public Color getShapeColor(int index){
+        return baseImageFactory.getShapeColor(index);
+    }
+
     public void generate(){
         baseImageFactory.setParameters();
         randomShapeFactory.setParameters();
@@ -51,8 +56,16 @@ public class Controler {
     }
 
     public void regenerate(){
+        regenerateBaseImage();
         setSizeFullImage();
         fullImageFactory.generateFullImage();
+        drawingPanelFull.repaint();
+    }
+
+    public void resize(){
+        setSizeFullImage();
+        fullImageFactory.generateFullImage();
+        drawingPanelFull.repaint();
     }
 
     public void export(){
@@ -78,6 +91,11 @@ public class Controler {
 
     public BufferedImage generateBaseImage(){
         this.baseImage = baseImageFactory.generateBaseImage();
+        return baseImage;
+    }
+
+    public BufferedImage regenerateBaseImage(){
+        this.baseImage = baseImageFactory.regenerateBaseImage();
         return baseImage;
     }
 
@@ -117,4 +135,7 @@ public class Controler {
         return randomShapeFactory;
     }
 
+    public void addShapeColorList(int index, Color color) {
+        baseImageFactory.setShapeColor(index,color);
+    }
 }

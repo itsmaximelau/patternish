@@ -17,7 +17,7 @@ public class Drawer {
             g2.setStroke(new BasicStroke(4));
             g2.setColor(Color.BLACK);
             g2.drawPolygon(s.getX(),s.getY(),s.getSize());
-            g2.setColor(Color.DARK_GRAY);
+            g2.setColor(controler.getImageFactory().getRandomShapeColor());
             g2.fillPolygon(s.getX(),s.getY(),s.getSize());
         }
     }

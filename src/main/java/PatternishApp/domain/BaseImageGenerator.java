@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class BaseImageGenerator {
     private List<Shape> shapeList = new ArrayList<>();
@@ -15,6 +16,12 @@ public class BaseImageGenerator {
     private int imageWidth;
     private int imageHeight;
     private Color bgColor = Color.WHITE;
+    private List<Color> shapeColorList = new ArrayList<>();
+    Random random = new Random();
+
+    public void setShapeColor(int index, Color color) {
+        shapeColorList.set(index, color);
+    }
 
     public BaseImageGenerator(Controler c, DrawingPanel drawingPanelBase) {
         this.controler = c;
@@ -32,6 +39,12 @@ public class BaseImageGenerator {
         return drawingPanelBase.getImage();
     }
 
+    public BufferedImage regenerateBaseImage(){
+        drawingPanelBase.setBackground(bgColor);
+        drawingPanelBase.repaint();
+        return drawingPanelBase.getImage();
+    }
+
     public void setBgColor(Color c){
         this.bgColor = c;
     }
@@ -41,6 +54,9 @@ public class BaseImageGenerator {
         this.imageWidth = controler.getMainWindow().getBaseImageWidth();
         this.imageHeight = controler.getMainWindow().getBaseImageHeight();
         drawingPanelBase.setSize(imageWidth,imageHeight);
+        shapeColorList.add(Color.DARK_GRAY);
+        shapeColorList.add(Color.GRAY);
+        shapeColorList.add(Color.LIGHT_GRAY);
     }
 
     public List<Shape> getShapeList(){
@@ -57,5 +73,14 @@ public class BaseImageGenerator {
 
     public Color getBGColor() {
         return this.bgColor;
+    }
+
+    public Color getRandomShapeColor(){
+        int randColor = random.nextInt(3);
+        return shapeColorList.get(randColor);
+    }
+
+    public Color getShapeColor(int index) {
+        return shapeColorList.get(index);
     }
 }

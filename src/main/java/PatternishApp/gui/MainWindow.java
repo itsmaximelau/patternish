@@ -24,13 +24,15 @@ public class MainWindow extends javax.swing.JFrame{
     private JPanel fullImagePanel;
     private JButton addColorBG;
     private JButton showColorButton;
-    private JButton addColorButton;
-    private JButton showColorButton1;
-    private JButton addColorButton1;
+    private JButton addColorShape1;
+    private JButton showColorShape1;
+    private JButton addColorShape2;
     private JButton showColorButton2;
-    private JButton addColorButton2;
-    private JButton showColorButton3;
+    private JButton addColorShape3;
+    private JButton showColorShape3;
     private JCheckBox exclusiveColorsCheckBox;
+    private JButton generateColors;
+    private JCheckBox overrideColorsForRandomCheckBox;
 
     public MainWindow(int width, int height){
         generateButton.addActionListener(new ActionListener() {
@@ -46,7 +48,7 @@ public class MainWindow extends javax.swing.JFrame{
                 super.componentResized(e);
                 if (controler.getBaseImage() != null)
                 {
-                    regenerate();
+                    resize();
                 }
             }
         });
@@ -62,13 +64,76 @@ public class MainWindow extends javax.swing.JFrame{
                 showColorBG();
             }
         });
+        addColorShape1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chooseColorShape(0);
+            }
+        });
+        addColorShape2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chooseColorShape(1);
+            }
+        });
+        addColorShape3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                chooseColorShape(2);
+            }
+        });
+        generateColors.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                regenerate();
+            }
+        });
+        showColorShape1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showColorShape(0);
+            }
+        });
+        showColorButton2.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showColorShape(1);
+            }
+        });
+        showColorShape3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showColorShape(2);
+            }
+        });
+    }
+
+    public void showColorShape(int index){
+        JPanel color = new JPanel();
+        color.setSize(10,10);
+        color.setBackground(controler.getShapeColor(index));
+        JOptionPane.showConfirmDialog(null, color, "Shape color", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+    }
+
+    public void chooseColorShape(int index){
+        Color newColor = JColorChooser.showDialog(
+                null,
+                "Choose Shape Color",
+                Color.BLACK);
+        if (newColor != null){
+            controler.addShapeColorList(index, newColor);
+        }
+    }
+
+    public void addShapeColorList(int index, Color color){
+        controler.addShapeColorList(index,color);
     }
 
     public void showColorBG(){
         JPanel color = new JPanel();
         color.setSize(10,10);
         color.setBackground(controler.getBGColor());
-        JOptionPane.showConfirmDialog(null, color, "Background color", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showConfirmDialog(null, color, "Background color", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
     }
 
     public void chooseColorBG(){
@@ -87,7 +152,10 @@ public class MainWindow extends javax.swing.JFrame{
 
     public void regenerate(){
         controler.regenerate();
-        System.out.println("REGEN");
+    }
+
+    public void resize(){
+        controler.resize();
     }
 
     public JPanel getFullImagePanel() {
