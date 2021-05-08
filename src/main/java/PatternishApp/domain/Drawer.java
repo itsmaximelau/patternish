@@ -25,4 +25,8 @@ public class Drawer {
     public void drawFullImage(Graphics g){
         g.drawImage(controler.getFullImage(),0,0,null);
     }
+
+    public void drawExportImage(Graphics g){
+        g.drawImage(controler.getExportImage(),0,0,null);
+    }
 }

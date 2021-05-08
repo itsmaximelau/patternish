@@ -17,7 +17,8 @@ public class DrawingPanel extends javax.swing.JPanel
 
     enum panelType{
         BASE,
-        FULL
+        FULL,
+        EXPORT
     }
 
     public DrawingPanel(){
@@ -47,6 +48,9 @@ public class DrawingPanel extends javax.swing.JPanel
                     break;
                 case FULL:
                     mainDrawer.drawFullImage(g);
+                    break;
+                case EXPORT:
+                    mainDrawer.drawExportImage(g);
                     break;
             }
         }

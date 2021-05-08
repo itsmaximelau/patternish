@@ -15,6 +15,7 @@ public class MainWindow extends javax.swing.JFrame{
     private JButton generateButton;
     private DrawingPanel drawingPanelFull;
     private DrawingPanel drawingPanelBase;
+    private DrawingPanel drawingPanelExport;
     private JComboBox shapeAmount;
     private JComboBox minNumVertex;
     private JSpinner baseImageHeight;
@@ -80,7 +81,7 @@ public class MainWindow extends javax.swing.JFrame{
     }
 
     private void initComponents(int width, int height){
-        controler = new Controler(drawingPanelBase,drawingPanelFull,this);
+        controler = new Controler(drawingPanelBase,drawingPanelFull,drawingPanelExport,this);
         setVisible(true);
         setContentPane(mainPanel);
         setSize(width,height);
@@ -100,6 +101,13 @@ public class MainWindow extends javax.swing.JFrame{
         menuBar.add(image);
         image.add(export);
 
+        export.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controler.export();
+            }
+        });
+
         this.setSize(width,height);
 
         baseImageHeight.setValue(Integer.valueOf(100));
@@ -110,6 +118,7 @@ public class MainWindow extends javax.swing.JFrame{
     private void createUIComponents() {
         drawingPanelBase = new DrawingPanel(this, DrawingPanel.panelType.BASE);
         drawingPanelFull = new DrawingPanel(this,DrawingPanel.panelType.FULL);
+        drawingPanelExport = new DrawingPanel(this, DrawingPanel.panelType.EXPORT);
     }
     private void $$$setupUI$$$() {
         createUIComponents();

@@ -11,44 +11,52 @@ import java.io.PrintStream;
 public class Controler {
     private Drawer drawer = new Drawer(this);
     private BufferedImage baseImage;
-    private BufferedImage fullImage;
     private DrawingPanel drawingPanelBase;
     private DrawingPanel drawingPanelFull;
+    private DrawingPanel drawingPanelExport;
     private RandomShapeFactory randomShapeFactory;
     private BaseImageGenerator baseImageFactory;
     private FullImageGenerator fullImageFactory;
     private MainWindow mainWindow;
     private int shapeAmount;
 
-    public Controler(DrawingPanel drawingPanelBase, DrawingPanel drawingPanelFull, MainWindow mainWindow) {
+    public Controler(DrawingPanel drawingPanelBase, DrawingPanel drawingPanelFull, DrawingPanel drawingPanelExport,MainWindow mainWindow) {
         this.mainWindow = mainWindow;
         this.drawingPanelBase = drawingPanelBase;
         this.drawingPanelFull = drawingPanelFull;
+        this.drawingPanelExport = drawingPanelExport;
         this.randomShapeFactory = new RandomShapeFactory(this);
         this.baseImageFactory = new BaseImageGenerator(this,drawingPanelBase);
-        this.fullImageFactory = new FullImageGenerator(this,drawingPanelFull);
+        this.fullImageFactory = new FullImageGenerator(this,drawingPanelFull,drawingPanelExport);
     }
 
     public void generate(){
         baseImageFactory.setParameters();
         randomShapeFactory.setParameters();
         setSizeFullImage();
+        setSizeExport();
         generateBaseImage();
         drawingPanelBase.repaint();
-        drawingPanelBase.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\test");
-        generateFullImage();
+        fullImageFactory.generateFullImage();
+        drawingPanelExport.repaint();
         drawingPanelFull.repaint();
-        drawingPanelFull.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\test1");
-        setMyBaseImage(drawingPanelBase.getImage());
     }
 
     public void regenerate(){
         setSizeFullImage();
-        generateFullImage();
+        fullImageFactory.generateFullImage();
+    }
+
+    public void export(){
+        drawingPanelExport.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\myImage");
     }
 
     public void setSizeFullImage(){
         drawingPanelFull.setSize(mainWindow.getFullImagePanel().getWidth()-12, mainWindow.getFullImagePanel().getHeight()-30);
+    }
+
+    public void setSizeExport(){
+        drawingPanelExport.setSize(1920,1080);
     }
 
     public int getShapeAmount() {
@@ -65,11 +73,6 @@ public class Controler {
         return baseImage;
     }
 
-    public BufferedImage generateFullImage(){
-        this.fullImage = fullImageFactory.generateFullImage();
-        return fullImage;
-    }
-
     public DrawingPanel getDrawingPanelFull() {
         return drawingPanelFull;
     }
@@ -78,12 +81,20 @@ public class Controler {
         return drawingPanelBase;
     }
 
+    public DrawingPanel getDrawingPanelExport() {
+        return drawingPanelExport;
+    }
+
     public BufferedImage getBaseImage() {
         return baseImage;
     }
 
     public BufferedImage getFullImage() {
-        return fullImage;
+        return fullImageFactory.getFullImage();
+    }
+
+    public BufferedImage getExportImage(){
+        return fullImageFactory.getExportImage();
     }
 
     public void setMyBaseImage(BufferedImage myBaseImage){
