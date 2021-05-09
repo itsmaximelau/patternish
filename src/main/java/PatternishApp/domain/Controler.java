@@ -64,7 +64,7 @@ public class Controler {
 
     public void resize(){
         setSizeFullImage();
-        fullImageFactory.generateFullImage();
+        fullImageFactory.resizeFullImage();
         drawingPanelFull.repaint();
     }
 
@@ -146,5 +146,9 @@ public class Controler {
 
     public int getBorderSize() {
         return mainWindow.getBorderSize();
+    }
+
+    public int getTransformation() {
+        return mainWindow.getTransformation();
     }
 }

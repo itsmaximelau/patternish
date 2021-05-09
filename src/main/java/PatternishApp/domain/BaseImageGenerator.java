@@ -15,7 +15,7 @@ public class BaseImageGenerator {
     private DrawingPanel drawingPanelBase;
     private int imageWidth;
     private int imageHeight;
-    private Color bgColor = new Color(60,63,65);
+    private Color bgColor = new Color(255,102,102);
     private List<Color> shapeColorList = new ArrayList<>();
     Random random = new Random();
 
@@ -55,7 +55,7 @@ public class BaseImageGenerator {
         this.imageHeight = controler.getMainWindow().getBaseImageHeight();
         drawingPanelBase.setSize(imageWidth,imageHeight);
         shapeColorList.add(new Color(161, 228, 230));
-        shapeColorList.add(new Color(211,211,211));
+        shapeColorList.add(new Color(0,102,102));
         shapeColorList.add(new Color(119,136,153));
     }
 

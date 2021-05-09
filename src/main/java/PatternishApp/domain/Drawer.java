@@ -12,10 +12,12 @@ public class Drawer {
     public void drawBaseImage(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
         for (Shape s : controler.getImageFactory().getShapeList()){
-            g2.setStroke(new BasicStroke(controler.getBorderSize()));
-            System.out.println(controler.getBorderSize());
+            int borderSize = controler.getBorderSize();
+            g2.setStroke(new BasicStroke(borderSize));
             g2.setColor(Color.BLACK);
-            g2.drawPolygon(s.getX(),s.getY(),s.getSize());
+            if (borderSize != 0) {
+                g2.drawPolygon(s.getX(), s.getY(), s.getSize());
+            }
             g2.setColor(controler.getImageFactory().getRandomShapeColor());
             g2.fillPolygon(s.getX(),s.getY(),s.getSize());
         }
