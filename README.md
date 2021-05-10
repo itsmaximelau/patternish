@@ -2,7 +2,7 @@
 <b> patternish </b> is a random pattern generator made with Java. Patterns are generated from random polygons and makes perfect abstract backgrounds.
 
 ## How does it work ?
-A pattern is generated from a base image.The menu on the right basically allows you to change the base image. Then, a transformation is applied to the base image to rotate or flip it and the transformed image is copied to the right of the base image. Then another transformed image is copied next to the previous one and the same process is done to fill the full image, from left to right, top to bottom. So the interesting part is that we need to generate a base image that we like and then apply a transformation that then makes it interesting as a complete image. 
+A pattern is generated from a base image. The menu on the right basically allows you to change the base image. A transformation is applied to the base image to rotate or flip it and the transformed image is copied to the right of the base image. Then, another transformed image is copied next to the previous one and the same process is done to fill the full image, from left to right, top to bottom. So the interesting part is that we need to generate a base image that we like and then apply a transformation that then makes it interesting as a complete image. 
 
 ## Parameters and features
 * Shapes
