@@ -5,7 +5,7 @@ TO ADD
 TO ADD
 
 ## Example
-TO ADD
+![Usage example](https://github.com/itsmaximelau/patternish/blob/main/resources/exampleGif.gif?raw=true)
 
 ## Setup
 Just make sure Java is installed and then, run the JAR file named patternish.jar which is located at the root of the project.
