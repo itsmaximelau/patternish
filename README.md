@@ -7,6 +7,8 @@
 ## How does it work ?
 A pattern is generated from a base image. The menu on the right allows you to change the base image. A transformation is applied to the base image to rotate or flip it and the transformed image is copied to the right of the base image. Then, another transformed image is copied next to the previous one and the same process is done to fill the full image, from left to right, top to bottom. So the interesting part is that we need to generate a base image that we like and then apply a transformation that then makes it interesting as a complete image. 
 
+I also made a complete video on how to use the app : https://youtu.be/XdS31uSzYAE
+
 ## Parameters and features
 * Shapes
   * Amount : amount of shapes per base image.
