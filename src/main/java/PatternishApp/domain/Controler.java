@@ -1,16 +1,20 @@
+/**
+ * This class is used to link GUI and Domain.
+ *
+ * @author  itsmaximelau
+ * @version 1.0
+ * @since   2021-05-09
+ */
+
 package PatternishApp.domain;
 
 import PatternishApp.gui.DrawingPanel;
 import PatternishApp.gui.MainWindow;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.PrintStream;
-import java.nio.Buffer;
 
-public class Controler {
-    private Drawer drawer = new Drawer(this);
+public class Controler{
     private BufferedImage baseImage;
     private DrawingPanel drawingPanelBase;
     private DrawingPanel drawingPanelFull;
@@ -28,21 +32,13 @@ public class Controler {
         this.drawingPanelExport = drawingPanelExport;
         this.randomShapeFactory = new RandomShapeFactory(this);
         this.baseImageFactory = new BaseImageGenerator(this,drawingPanelBase);
-        this.fullImageFactory = new FullImageGenerator(this,drawingPanelFull,drawingPanelExport);
+        this.fullImageFactory = new FullImageGenerator(this);
     }
 
-    public void setBaseImageBGColor(Color c){
-        baseImageFactory.setBgColor(c);
-    }
-
-    public Color getBGColor(){
-        return baseImageFactory.getBGColor();
-    }
-
-    public Color getShapeColor(int index){
-        return baseImageFactory.getShapeColor(index);
-    }
-
+    /*
+     * Method used to generate a pattern (using Generate button).
+     * Used when a pattern needs to be generated for the first time.
+     */
     public void generate(){
         baseImageFactory.setParameters();
         randomShapeFactory.setParameters();
@@ -55,6 +51,10 @@ public class Controler {
         drawingPanelFull.repaint();
     }
 
+    /*
+     * Method used to regenerate a pattern (using Regenerate button).
+     * Used to keep same shapes but apply different transformations or colors.
+     */
     public void regenerate(){
         regenerateBaseImage();
         setSizeFullImage();
@@ -62,6 +62,10 @@ public class Controler {
         drawingPanelFull.repaint();
     }
 
+    /*
+     * Method used to extend pattern size.
+     * Used to keep the pattern exactly the same but smaller/bigger.
+     */
     public void resize(){
         setSizeFullImage();
         fullImageFactory.resizeFullImage();
@@ -73,25 +77,7 @@ public class Controler {
             setSizeExport();
             resize();
             drawingPanelExport.saveImage(path);
-            //drawingPanelExport.saveImage("C:\\Users\\Maxime Laurent\\Desktop\\myImage",0);
         }
-    }
-
-    public void setSizeFullImage(){
-        drawingPanelFull.setSize(mainWindow.getFullImagePanel().getWidth()-12, mainWindow.getFullImagePanel().getHeight()-30);
-    }
-
-    public void setSizeExport(){
-        drawingPanelExport.setSize(mainWindow.getExportImageSize());
-    }
-
-    public int getShapeAmount() {
-        this.shapeAmount = mainWindow.getShapeAmount();
-        return shapeAmount;
-    }
-
-    public MainWindow getMainWindow(){
-        return mainWindow;
     }
 
     public BufferedImage generateBaseImage(){
@@ -102,6 +88,30 @@ public class Controler {
     public BufferedImage regenerateBaseImage(){
         this.baseImage = baseImageFactory.regenerateBaseImage();
         return baseImage;
+    }
+
+    public void addShapeColorList(int index, Color color) {
+        baseImageFactory.setShapeColor(index,color);
+    }
+
+    public void setSizeFullImage(){
+        drawingPanelFull.setSize(mainWindow.getFullImagePanel().getWidth()-12, mainWindow.getFullImagePanel().getHeight()-30);
+    }
+
+    public void setSizeExport(){
+        drawingPanelExport.setSize(mainWindow.getExportImageSize());
+    }
+
+    public void setBaseImageBGColor(Color c){
+        baseImageFactory.setBgColor(c);
+    }
+
+    public Color getBGColor(){
+        return baseImageFactory.getBGColor();
+    }
+
+    public Color getShapeColor(int index){
+        return baseImageFactory.getShapeColor(index);
     }
 
     public DrawingPanel getDrawingPanelFull() {
@@ -128,10 +138,6 @@ public class Controler {
         return fullImageFactory.getExportImage();
     }
 
-    public void setMyBaseImage(BufferedImage myBaseImage){
-        this.baseImage = myBaseImage;
-    }
-
     public BaseImageGenerator getImageFactory() {
         return baseImageFactory;
     }
@@ -140,15 +146,20 @@ public class Controler {
         return randomShapeFactory;
     }
 
-    public void addShapeColorList(int index, Color color) {
-        baseImageFactory.setShapeColor(index,color);
-    }
-
     public int getBorderSize() {
         return mainWindow.getBorderSize();
     }
 
     public int getTransformation() {
         return mainWindow.getTransformation();
+    }
+
+    public int getShapeAmount() {
+        this.shapeAmount = mainWindow.getShapeAmount();
+        return shapeAmount;
+    }
+
+    public MainWindow getMainWindow(){
+        return mainWindow;
     }
 }

@@ -1,3 +1,12 @@
+/**
+ * This class implements Shape, which is the interface used
+ * with RandomShapeFactory.
+ *
+ * @author  itsmaximelau
+ * @version 1.0
+ * @since   2021-05-09
+ */
+
 package PatternishApp.domain;
 
 import java.awt.*;
@@ -18,6 +27,7 @@ public class Polygon implements Shape{
             pointArray[i] = points.get(i);
         }
 
+        //Makes the polygon Convex (because Concave looked strange).
         points = convexHull(pointArray,points.size());
 
         pointsList = points;

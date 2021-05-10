@@ -1,3 +1,12 @@
+/**
+ * This class is used with the DrawingPanel to
+ * draw different images.
+ *
+ * @author  itsmaximelau
+ * @version 1.0
+ * @since   2021-05-09
+ */
+
 package PatternishApp.domain;
 
 import java.awt.*;
@@ -9,6 +18,11 @@ public class Drawer {
         this.controler = controler;
     }
 
+    /*
+     * Method that draws a base image on a DrawingPanel. It
+     * takes a shape list and draws them with a color and border.
+     *
+     */
     public void drawBaseImage(Graphics g){
         Graphics2D g2 = (Graphics2D) g;
         for (Shape s : controler.getImageFactory().getShapeList()){

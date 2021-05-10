@@ -1,3 +1,12 @@
+/**
+ * DrawingPanel is the class used to draw the shapes. It's used for the
+ * base image, the full image and the exported image.
+ *
+ * @author  itsmaximelau
+ * @version 1.0
+ * @since   2021-05-09
+ */
+
 package PatternishApp.gui;
 
 import PatternishApp.domain.Drawer;
@@ -14,7 +23,7 @@ public class DrawingPanel extends javax.swing.JPanel
     private ImageFlipping flipper;
     private panelType type;
 
-
+    //Panel types
     enum panelType{
         BASE,
         FULL,
@@ -61,18 +70,9 @@ public class DrawingPanel extends javax.swing.JPanel
 
     }
 
-    public void regen(){
-        repaint();
-    }
-
-    public void setMainWindow(MainWindow mainWindow){
-        this.mainWindow = mainWindow;
-    }
-
-    public MainWindow getMainWindow() {
-        return mainWindow;
-    }
-
+    /*
+     * This method is used to used to save current DrawingPanel as a png.
+     */
     public void saveImage(String nom){
         BufferedImage image = new BufferedImage(getWidth(), getHeight(), BufferedImage.TYPE_INT_RGB);
 
@@ -82,7 +82,7 @@ public class DrawingPanel extends javax.swing.JPanel
             ImageIO.write(image, "png", new File(nom + ".png"));
         }
         catch (Exception e){
-            System.out.println("Can't export image");
+            System.out.println("Can't export image.");
         }
     }
 

@@ -1,6 +1,13 @@
-package PatternishApp.domain;
+/**
+ * This class is used to generate a full image from a base image.
+ * Transformations are applied to the base image.
+ *
+ * @author  itsmaximelau
+ * @version 1.0
+ * @since   2021-05-09
+ */
 
-import PatternishApp.gui.DrawingPanel;
+package PatternishApp.domain;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -8,26 +15,14 @@ import java.util.Random;
 
 public class FullImageGenerator {
     private Controler controler;
-    private DrawingPanel drawingPanelFull;
-    private DrawingPanel drawingPanelExport;
     private ImageFlipping flipper;
     private BufferedImage fullImage;
     private BufferedImage exportImage;
     private int transformation;
     Random random = new Random();
 
-    public BufferedImage getFullImage() {
-        return fullImage;
-    }
-
-    public BufferedImage getExportImage() {
-        return exportImage;
-    }
-
-    public FullImageGenerator(Controler c, DrawingPanel drawingPanelFull, DrawingPanel drawingPanelExport) {
+    public FullImageGenerator(Controler c) {
         this.controler = c;
-        this.drawingPanelFull = drawingPanelFull;
-        this.drawingPanelExport = drawingPanelExport;
     }
 
     public void generateFullImage(){
@@ -60,6 +55,10 @@ public class FullImageGenerator {
         }
     }
 
+    /*
+     * Method that generates a full image. Each case is a different possible transformation.
+     * If transformations are added in the future, they need to be added manually into the GUI.
+     */
     public BufferedImage generateImage(int fullImageWidth, int fullImageHeight){
         BufferedImage baseImage = controler.getBaseImage();
 
@@ -112,9 +111,16 @@ public class FullImageGenerator {
                 }
                 break;
         }
-
         g.dispose();
 
         return image;
+    }
+
+    public BufferedImage getFullImage() {
+        return fullImage;
+    }
+
+    public BufferedImage getExportImage() {
+        return exportImage;
     }
 }

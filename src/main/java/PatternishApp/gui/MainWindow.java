@@ -1,3 +1,12 @@
+/**
+ * Patternish is displayed by a MainWindow, that is generated
+ * by this class.
+ *
+ * @author  itsmaximelau
+ * @version 1.0
+ * @since   2021-05-09
+ */
+
 package PatternishApp.gui;
 
 import PatternishApp.domain.Controler;
@@ -43,20 +52,22 @@ public class MainWindow extends JFrame {
     private JComboBox transformationType;
 
     public MainWindow(int width, int height) {
+        //Auto-generated code in setupUI
         $$$setupUI$$$();
-        this.setIconImage(new ImageIcon(getClass().getResource("/shapeIcon.png")).getImage());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        initComponents(width, height);
+
+        //Listeners
         generateButton.addActionListener(new ActionListener() {
             @Override
+            //To
             public void actionPerformed(ActionEvent e) {
-                if (validVertices()) {
+                if (getMinNumVertex() <= getMaxNumVertex()) {
                     generate();
                 } else {
                     JOptionPane.showMessageDialog(null, "Minimum vertices can't be greater than maximum vertices.");
                 }
             }
         });
-        initComponents(width, height);
         mainPanel.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -69,31 +80,31 @@ public class MainWindow extends JFrame {
         addColorBG.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                chooseColorBG();
+                chooseColor(-1);
             }
         });
         showColorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                showColorBG();
+                showColorShape(-1);
             }
         });
         addColorShape1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                chooseColorShape(0);
+                chooseColor(0);
             }
         });
         addColorShape2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                chooseColorShape(1);
+                chooseColor(1);
             }
         });
         addColorShape3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                chooseColorShape(2);
+                chooseColor(2);
             }
         });
         generateColors.addActionListener(new ActionListener() {
@@ -122,12 +133,68 @@ public class MainWindow extends JFrame {
         });
     }
 
-    public boolean validVertices() {
-        return getMinNumVertex() <= getMaxNumVertex();
+    /*
+     * This method gets a color to create a popup to give user a look at the color.
+     */
+    public void showColorShape(int index) {
+        Color color;
+        if (index != -1) {
+            color = controler.getShapeColor(index);
+        } else {
+            color = controler.getBGColor();
+        }
+        JPanel colorRGB = new ColorSquare(color);
+        colorRGB.setSize(10, 10);
+        JLabel label = new JLabel("This is the color.");
+        label.setForeground(Color.BLACK);
+        colorRGB.add(label);
+        if (index == -1) {
+            JOptionPane.showConfirmDialog(null, colorRGB, "Background color", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+        } else {
+            JOptionPane.showConfirmDialog(null, colorRGB, "Shape color", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
+        }
+    }
+
+    /*
+     * This method creates a color picker that the user can use to pick a background or shape color.
+     */
+    public void chooseColor(int index) {
+        String title;
+
+        if (index == -1) {
+            title = "Choose Background Color";
+        } else {
+            title = "Choose Shape Color";
+        }
+
+        Color newColor = JColorChooser.showDialog(
+                null,
+                title,
+                Color.BLACK);
+        if (newColor != null && index == -1) {
+            controler.setBaseImageBGColor(newColor);
+
+        } else if (newColor != null && index != -1) {
+            controler.addShapeColorList(index, newColor);
+        }
+    }
+
+    public void generate() {
+        controler.generate();
+    }
+
+    public void regenerate() {
+        if (controler.getBaseImage() != null) {
+            controler.regenerate();
+        }
+    }
+
+    public void resize() {
+        controler.resize();
     }
 
     public int getTransformation() {
-        int transformation = 4;
+        int transformation = 4; //Default size if no case match (won't happen).
         switch (transformationType.getSelectedIndex()) {
             case 0:
                 transformation = 0;
@@ -152,7 +219,7 @@ public class MainWindow extends JFrame {
     }
 
     public int getBorderSize() {
-        int size = 1;
+        int size = 1; //Default size if no case match (won't happen).
         switch (borderSize.getSelectedIndex()) {
             case 0:
                 size = 0;
@@ -168,66 +235,6 @@ public class MainWindow extends JFrame {
                 break;
         }
         return size;
-    }
-
-    public void showColorShape(int index) {
-        Color color = controler.getShapeColor(index);
-        JPanel colorRGB = new ColorSquare(color);
-        colorRGB.setSize(10, 10);
-        JLabel label = new JLabel("This is the color.");
-        label.setForeground(Color.BLACK);
-        System.out.println(color.toString());
-        colorRGB.add(label);
-        JOptionPane.showConfirmDialog(null, colorRGB, "Shape color", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
-    }
-
-    public void chooseColorShape(int index) {
-        Color newColor = JColorChooser.showDialog(
-                null,
-                "Choose Shape Color",
-                Color.BLACK);
-        if (newColor != null) {
-            controler.addShapeColorList(index, newColor);
-        }
-    }
-
-    public void addShapeColorList(int index, Color color) {
-        controler.addShapeColorList(index, color);
-    }
-
-    public void showColorBG() {
-        Color color = controler.getBGColor();
-        JPanel colorRGB = new ColorSquare(color);
-        colorRGB.setSize(10, 10);
-        JLabel label = new JLabel("This is the color.");
-        label.setForeground(Color.BLACK);
-        System.out.println(color.toString());
-        colorRGB.add(label);
-        JOptionPane.showConfirmDialog(null, colorRGB, "Background color", JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE);
-    }
-
-    public void chooseColorBG() {
-        Color newColor = JColorChooser.showDialog(
-                null,
-                "Choose Background Color",
-                Color.BLACK);
-        if (newColor != null) {
-            controler.setBaseImageBGColor(newColor);
-        }
-    }
-
-    public void generate() {
-        controler.generate();
-    }
-
-    public void regenerate() {
-        if (controler.getBaseImage() != null) {
-            controler.regenerate();
-        }
-    }
-
-    public void resize() {
-        controler.resize();
     }
 
     public JPanel getFullImagePanel() {
@@ -254,10 +261,6 @@ public class MainWindow extends JFrame {
         return Integer.parseInt(baseImageWidth.getValue().toString());
     }
 
-    public Dimension getBaseImageSize() {
-        return new Dimension(getBaseImageWidth(), getBaseImageHeight());
-    }
-
     public int getExportImageWidth() {
         return Integer.parseInt(exportImageWidth.getValue().toString());
     }
@@ -271,28 +274,40 @@ public class MainWindow extends JFrame {
     }
 
     private void initComponents(int width, int height) {
+        //Menu creation
         JMenuBar menuBar = new JMenuBar();
         this.setJMenuBar(menuBar);
         menuBar.setVisible(true);
-
         JMenu actions = new JMenu("Actions");
-
         JMenuItem exportWithSettings = new JMenuItem("Export");
         JMenuItem exit = new JMenuItem("Exit");
-
         menuBar.add(actions);
         actions.add(exportWithSettings);
         actions.add(exit);
 
+        //Creation of controler, which links GUI and Domain.
         controler = new Controler(drawingPanelBase, drawingPanelFull, drawingPanelExport, this);
+
         setVisible(true);
         setContentPane(mainPanel);
         setSize(width, height);
         this.setTitle("Patternish");
+        this.setIconImage(new ImageIcon(getClass().getResource("/shapeIcon.png")).getImage());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Set default fields selection, values and format
         shapeAmount.setSelectedIndex(2);
         maxNumVertex.setSelectedIndex(2);
         borderSize.setSelectedIndex(2);
         transformationType.setSelectedIndex(5);
+        baseImageWidth.setValue(Integer.valueOf(45));
+        baseImageHeight.setValue(Integer.valueOf(50));
+        JSpinner.NumberEditor widthEditor = new JSpinner.NumberEditor(exportImageWidth, "#");
+        exportImageWidth.setEditor(widthEditor);
+        JSpinner.NumberEditor heightEditor = new JSpinner.NumberEditor(exportImageHeight, "#");
+        exportImageHeight.setEditor(heightEditor);
+        exportImageWidth.setValue(Integer.valueOf(1920));
+        exportImageHeight.setValue(Integer.valueOf(1080));
 
         exportWithSettings.addActionListener(new ActionListener() {
             @Override
@@ -314,20 +329,6 @@ public class MainWindow extends JFrame {
                 System.exit(0);
             }
         });
-
-        this.setSize(width, height);
-
-        baseImageWidth.setValue(Integer.valueOf(45));
-        baseImageHeight.setValue(Integer.valueOf(50));
-
-        JSpinner.NumberEditor widthEditor = new JSpinner.NumberEditor(exportImageWidth, "#");
-        exportImageWidth.setEditor(widthEditor);
-        JSpinner.NumberEditor heightEditor = new JSpinner.NumberEditor(exportImageHeight, "#");
-        exportImageHeight.setEditor(heightEditor);
-
-        exportImageWidth.setValue(Integer.valueOf(1920));
-        exportImageHeight.setValue(Integer.valueOf(1080));
-
     }
 
     private void createUIComponents() {

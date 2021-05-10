@@ -1,3 +1,12 @@
+/**
+ * This class is used to generate base images from parameters set in
+ * the GUI. Base images are then used to generate full images.
+ *
+ * @author  itsmaximelau
+ * @version 1.0
+ * @since   2021-05-09
+ */
+
 package PatternishApp.domain;
 
 import PatternishApp.gui.DrawingPanel;
@@ -19,16 +28,16 @@ public class BaseImageGenerator {
     private List<Color> shapeColorList = new ArrayList<>();
     Random random = new Random();
 
-    public void setShapeColor(int index, Color color) {
-        shapeColorList.set(index, color);
-    }
-
     public BaseImageGenerator(Controler c, DrawingPanel drawingPanelBase) {
         this.controler = c;
         this.drawingPanelBase = drawingPanelBase;
         setParameters();
     }
 
+    /*
+     * Method used to generate a base image.
+     * Used when a completely new base image is generated.
+     */
     public BufferedImage generateBaseImage() {
         clearShapeList();
         for (int i = 0; i < amount; i++) {
@@ -39,10 +48,19 @@ public class BaseImageGenerator {
         return drawingPanelBase.getImage();
     }
 
+    /*
+     * Method used to regenerate a base image.
+     * Used when a previous base image (same shapes) need to be regenerated
+     * with different parameters (colors, for example).
+     */
     public BufferedImage regenerateBaseImage(){
         drawingPanelBase.setBackground(bgColor);
         drawingPanelBase.repaint();
         return drawingPanelBase.getImage();
+    }
+
+    public void setShapeColor(int index, Color color) {
+        shapeColorList.set(index, color);
     }
 
     public void setBgColor(Color c){

@@ -1,3 +1,11 @@
+/**
+ * This class is used to create random shapes from set parameters.
+ *
+ * @author  itsmaximelau
+ * @version 1.0
+ * @since   2021-05-09
+ */
+
 package PatternishApp.domain;
 
 import java.awt.*;
@@ -18,19 +26,25 @@ public class RandomShapeFactory {
         setParameters();
     }
 
+    /*
+     * Method that generates a random shape with random coordinates and a random amount of vertices.
+     * Ready to support more shape types in the future.
+     */
     public Shape generateShape(){
-        int randType = random.nextInt(1);
+        int randType = 0; //When I'll be ready to implement more shapes type, just use random.nextInt(X);
 
-        if (randType == 0 || randType == 1){
+        if (randType == 0){
             int randVertex = random.nextInt((maxVertex - minVertex) + 1) + minVertex;
             List<Point> points = generateCoordinates(randVertex,maxX,maxY);
 
             return new Polygon(points);
         }
-
         return null;
     }
 
+    /*
+     * Method that generates random coordinates within max coordinates.
+     */
     private List<Point> generateCoordinates(int vertex,int maxX,int maxY){
         List<Point> vertexList = new ArrayList<Point>();
 
