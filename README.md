@@ -1,5 +1,5 @@
 
-![Logo](https://github.com/itsmaximelau/patternish/blob/master/resources/patternish.png?raw=true)
+![Logo](https://github.com/itsmaximelau/patternish/blob/master/resources/patternishLogo.png?raw=true)
 
 ## Description
 <b> patternish </b> is a random pattern generator made with Java. Patterns are generated from random polygons and make perfect abstract backgrounds.
