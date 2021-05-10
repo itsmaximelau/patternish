@@ -49,7 +49,11 @@ public class MainWindow extends JFrame {
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                generate();
+                if (validVertices()) {
+                    generate();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Minimum vertices can't be greater than maximum vertices.");
+                }
             }
         });
         initComponents(width, height);
@@ -116,6 +120,10 @@ public class MainWindow extends JFrame {
                 showColorShape(2);
             }
         });
+    }
+
+    public boolean validVertices() {
+        return getMinNumVertex() <= getMaxNumVertex();
     }
 
     public int getTransformation() {
@@ -366,7 +374,7 @@ public class MainWindow extends JFrame {
         label1.setText("Amount");
         panel2.add(label1, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         final JLabel label2 = new JLabel();
-        label2.setText("Minimum vertex");
+        label2.setText("Minimum vertices");
         panel2.add(label2, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         minNumVertex = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel2 = new DefaultComboBoxModel();
@@ -379,7 +387,7 @@ public class MainWindow extends JFrame {
         minNumVertex.setModel(defaultComboBoxModel2);
         panel2.add(minNumVertex, new GridConstraints(1, 1, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, new Dimension(80, -1), new Dimension(80, -1), new Dimension(80, -1), 0, false));
         final JLabel label3 = new JLabel();
-        label3.setText("Maximum vertex");
+        label3.setText("Maximum vertices");
         panel2.add(label3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         maxNumVertex = new JComboBox();
         final DefaultComboBoxModel defaultComboBoxModel3 = new DefaultComboBoxModel();

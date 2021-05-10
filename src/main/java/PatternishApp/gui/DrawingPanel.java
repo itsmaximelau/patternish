@@ -79,7 +79,7 @@ public class DrawingPanel extends javax.swing.JPanel
         Graphics2D g2 = image.createGraphics();
         paint(g2);
         try{
-            ImageIO.write(image, "JPEG", new File(nom + ".png"));
+            ImageIO.write(image, "png", new File(nom + ".png"));
         }
         catch (Exception e){
             System.out.println("Can't export image");
